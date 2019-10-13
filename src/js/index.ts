@@ -1,12 +1,4 @@
-import axios from 'axios';
-import { CLIENT_RENEG_WINDOW } from 'tls';
+import { Search } from './models/Search';
 
-const getResults = async (query : string) => {
-    try {
-        const res : any = await axios.get(`${process.env.PROXY}http://food2fork.com/api/search?key=${process.env.API_KEY}&q=${query}`);
-        console.log(res.data.recipes);
-    } catch (error) {
-        console.log(error)
-    }
-}
-getResults('pizza');
+const pizza: Search = new Search('pizza');
+pizza.getResults().then(res => console.log(res));
