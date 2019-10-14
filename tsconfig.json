@@ -5,9 +5,11 @@
       "module": "commonjs",
       "target": "es5",
       "jsx": "react",
-      "lib":["es2015", "es6"],
+      "lib":["es2015", "es6", "dom"],
       "allowJs": true,
       "allowSyntheticDefaultImports": true,
+      // Restrict DOM return null behavior by querySelector
+      // "strictNullChecks": true,
     },
     "include": [
         "src/**/*"
