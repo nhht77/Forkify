@@ -1,8 +1,9 @@
 import { Search } from './models/Search';
-
+import * as searchView from './views/';
+import { elements } from './views/base';
 
 interface State {
-    search: string | Search
+  search: string | Search;
 }
 
 /** Global state of the app
@@ -11,34 +12,32 @@ interface State {
  * - Shopping list object
  * - Liked recipes
  */
-const state : State = {
-    search: ''
+const state: State = {
+  search: ''
 };
 
-const controlSearch : Function = async () => {
-    // 1) Get the query from the view
-    const query : string = 'pizza';
+const controlSearch: Function = async () => {
+  // 1) Get the query from the view
+  const query: string = searchView.getInput();
+  console.log(query);
 
-    if(query){
-        // 2)Now search object and add to state
-        state.search = new Search(query);
+  if (query) {
+    // 2)Now search object and add to state
+    state.search = new Search(query);
 
-        // 3) Prepare UI for results
+    // 3) Prepare UI for results
 
-        // 4) Search for recipes
-        const result = await state.search.getResults();
+    // 4) Search for recipes
+    const result = await state.search.getResults();
 
-        // 5) Render results on UI
-        console.log(result)
-    }
-}
+    // 5) Render results on UI
+    console.log(result);
+    searchView.renderResults(result);
+  }
+};
 
-const form = <HTMLFormElement>document.querySelector('.search');
+const form: HTMLFormElement = elements.searchForm;
 form.addEventListener('submit', e => {
-    e.preventDefault();
-    controlSearch()
-})
-
-
-const pizza: Search = new Search('pizza');
-pizza.getResults().then(res => console.log(res));
+  e.preventDefault();
+  controlSearch();
+});
