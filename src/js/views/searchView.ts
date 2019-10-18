@@ -12,6 +12,8 @@ interface Recipe {
 
 export const getInput: Function = () => elements.searchInput.value;
 
+export const clearInput: Function = () => { elements.searchInput.value = '' };
+
 const renderRecipe: Function = (recipe: Recipe) => {
   const markup: string = `
     <li>
@@ -33,3 +35,5 @@ const renderRecipe: Function = (recipe: Recipe) => {
 export const renderResults: Function = (recipes: Array<Recipe>) => {
   recipes.forEach(el => renderRecipe(el));
 };
+
+export const clearResults: Function = () => { elements.searchResultList.innerHTML = '' }
