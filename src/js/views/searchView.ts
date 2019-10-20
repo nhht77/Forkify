@@ -37,17 +37,19 @@ const renderRecipe: Function = (recipe: Recipe) => {
 };
 
 const limitRecipeTitle: Function = (title: string, limit: number = 20) => {
-  const newTitle: Array<String> = [];
+  const newTitle: Array<string> = [];
   if (title.length > limit) {
-    title.split(' ').reduce((acc: number, cur: string) => {
+    title.split(' ').reduce((acc, cur) => {
       if (acc + cur.length <= limit) {
         newTitle.push(cur);
       }
       return acc + cur.length;
     }, 0);
-  }
 
-  return `${newTitle.join(' ')} ...`;
+    // return the result
+    return `${newTitle.join(' ')} ...`;
+  }
+  return title;
 };
 
 export const renderResults: Function = (recipes: Array<Recipe>) => {

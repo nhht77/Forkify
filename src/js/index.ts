@@ -1,6 +1,6 @@
 import { Search } from './models/Search';
 import * as searchView from './views/';
-import { elements } from './views/base';
+import { elements, renderLoader, clearLoader } from './views/base';
 
 interface State {
   search: string | Search;
@@ -28,12 +28,13 @@ const controlSearch: Function = async () => {
     // 3) Prepare UI for results
     searchView.clearInput();
     searchView.clearResults();
+    renderLoader(elements.searchResult);
 
     // 4) Search for recipes
     const result = await state.search.getResults();
 
     // 5) Render results on UI
-    console.log(result);
+    clearLoader();
     searchView.renderResults(result);
   }
 };
