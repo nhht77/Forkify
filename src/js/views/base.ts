@@ -3,6 +3,7 @@ interface Elements {
   searchForm: HTMLFormElement;
   searchResult: HTMLElement;
   searchResultList: HTMLUListElement;
+  searchResultPage: HTMLElement;
 }
 
 interface ElementStrings {
@@ -13,7 +14,8 @@ export const elements: Elements = {
   searchInput: <HTMLInputElement>document.querySelector('.search__field'),
   searchForm: <HTMLFormElement>document.querySelector('.search'),
   searchResult: <HTMLElement>document.querySelector('.results'),
-  searchResultList: <HTMLUListElement>document.querySelector('.results__list')
+  searchResultList: <HTMLUListElement>document.querySelector('.results__list'),
+  searchResultPage: <HTMLElement>document.querySelector('.results__pages')
 };
 
 export const elementStrings: ElementStrings = {

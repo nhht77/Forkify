@@ -19,7 +19,6 @@ const state: State = {
 const controlSearch: Function = async () => {
   // 1) Get the query from the view
   const query: string = searchView.getInput();
-  console.log(query);
 
   if (query) {
     // 2)Now search object and add to state
@@ -31,7 +30,7 @@ const controlSearch: Function = async () => {
     renderLoader(elements.searchResult);
 
     // 4) Search for recipes
-    const result = await state.search.getResults();
+    const result: Array<Search> = await state.search.getResults();
 
     // 5) Render results on UI
     clearLoader();
