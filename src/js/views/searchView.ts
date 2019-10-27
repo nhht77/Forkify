@@ -85,12 +85,12 @@ const renderButtons: Function = (
     // Only button goes to prev page
     button = createButton(page, 'prev');
   }
-  elements.searchResultPage.insertAdjacentHTML('afterbegin', button);
+  elements.searchResultsPages.insertAdjacentHTML('afterbegin', button);
 };
 
 export const renderResults: Function = (
   recipes: Array<Recipe>,
-  page: number = 1,
+  page: number = 2,
   resultsPerPage: number = 10
 ) => {
   // render result of current page
@@ -105,4 +105,5 @@ export const renderResults: Function = (
 
 export const clearResults: Function = () => {
   elements.searchResultList.innerHTML = '';
+  elements.searchResultsPages.innerHTML = '';
 };

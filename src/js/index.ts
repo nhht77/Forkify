@@ -3,7 +3,7 @@ import * as searchView from './views/';
 import { elements, renderLoader, clearLoader } from './views/base';
 
 interface State {
-  search: string | Search;
+  search?: Search;
 }
 
 /** Global state of the app
@@ -13,7 +13,7 @@ interface State {
  * - Liked recipes
  */
 const state: State = {
-  search: ''
+  // search
 };
 
 const controlSearch: Function = async () => {
@@ -38,8 +38,20 @@ const controlSearch: Function = async () => {
   }
 };
 
-const form: HTMLFormElement = elements.searchForm;
-form.addEventListener('submit', e => {
+elements.searchForm.addEventListener('submit', e => {
   e.preventDefault();
   controlSearch();
+});
+
+elements.searchResultsPages.addEventListener('click', async e => {
+  const target = e.target as HTMLElement;
+  const button = target.closest('.btn-inline');
+
+  if (button) {
+    const pageTogo: number = parseInt(button.getAttribute('data-goto'));
+    const results: Array<Search> = await state.search.getResults();
+    searchView.clearResults();
+    // elements.searchResultsPages.innerHTML = '';
+    searchView.renderResults(results, pageTogo);
+  }
 });
