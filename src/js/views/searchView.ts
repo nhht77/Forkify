@@ -19,8 +19,8 @@ export const clearInput: Function = () => {
 const renderRecipe: Function = (recipe: Recipe) => {
   const markup: string = `
     <li>
-        <a class="results__link results__link--active" href="${
-          recipe.source_url
+        <a class="results__link results__link--active" href="#${
+          recipe.recipe_id
         }">
             <figure class="results__fig">
                 <img src="${recipe.image_url}" alt="${recipe.title}">

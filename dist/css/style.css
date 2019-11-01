@@ -443,7 +443,8 @@
     .shopping__list {
       list-style: none;
       max-height: 77rem;
-      overflow: scroll; }
+      overflow: scroll;
+      opacity: 0; }
     .shopping__item {
       display: flex;
       align-items: flex-start;

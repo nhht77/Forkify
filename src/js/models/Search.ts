@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-class Search {
+export default class Search {
   private query: string;
-  private recipes : any;//Array<Object>;
+  private recipes: any; //Array<Object>;
 
   constructor(query: string) {
     this.query = query;
@@ -11,7 +11,8 @@ class Search {
   getResults = async () => {
     try {
       const res: any = await axios.get(
-        `${process.env.PROXY}http://food2fork.com/api/search?key=${process.env.API_KEY}&q=${this.query}`
+        // `${process.env.PROXY}http://food2fork.com/api/search?key=${process.env.API_KEY}&q=${this.query}`
+        `https://forkify-api.herokuapp.com/api/search?&q=${this.query}`
       );
       let { recipes } = res.data;
       return recipes;
@@ -20,5 +21,3 @@ class Search {
     }
   };
 }
-
-export { Search };

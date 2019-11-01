@@ -1,4 +1,5 @@
-import { Search } from './models/Search';
+import Search from './models/Search';
+import Recipe from './models/Recipe';
 import * as searchView from './views/';
 import { elements, renderLoader, clearLoader } from './views/base';
 
@@ -16,6 +17,9 @@ const state: State = {
   // search
 };
 
+/**
+ * SEARCH CONTROLLER
+ */
 const controlSearch: Function = async () => {
   // 1) Get the query from the view
   const query: string = searchView.getInput();
@@ -51,7 +55,13 @@ elements.searchResultsPages.addEventListener('click', async e => {
     const pageTogo: number = parseInt(button.getAttribute('data-goto'));
     const results: Array<Search> = await state.search.getResults();
     searchView.clearResults();
-    // elements.searchResultsPages.innerHTML = '';
     searchView.renderResults(results, pageTogo);
   }
 });
+
+/**
+ * RECIPE CONTROLLER
+ */
+const r = new Recipe(47746);
+r.getRecipe();
+console.log(r);
