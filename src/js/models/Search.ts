@@ -17,6 +17,7 @@ export default class Search {
       let { recipes } = res.data;
       return recipes;
     } catch (error) {
+      alert('something went wrong: ' + error);
       console.log(error);
     }
   };
