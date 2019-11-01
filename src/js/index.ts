@@ -5,6 +5,7 @@ import { elements, renderLoader, clearLoader } from './views/base';
 
 interface State {
   search?: Search;
+  recipe?: Recipe;
 }
 
 /** Global state of the app
@@ -63,24 +64,26 @@ elements.searchResultsPages.addEventListener('click', async e => {
  * RECIPE CONTROLLER
  */
 const controlRecipe: Function = async () => {
-  const id = window.location.hash.replace('#', '');
+  const id = parseInt(window.location.hash.replace('#', ''));
   console.log(id)
 
   if(id) {
     // Prepare UI for changes
 
     // Create new recipe object
+    state.recipe = new Recipe(id);
 
     // Get recipe data
+    await state.recipe.getRecipe();
 
     // Calculate servings and time
+    state.recipe.calcTime();
+    state.recipe.calcServing();
 
     // render recipe
+    console.log(state.recipe); 
   }
 } 
 
 window.addEventListener('hashchange', () => controlRecipe())
-
-// const r = new Recipe(47746);
-// r.getRecipe();
-// console.log(r);
+window.addEventListener('load', () => controlRecipe())
