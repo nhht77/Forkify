@@ -7,6 +7,8 @@ export default class Recipe {
   private url: string;
   private img: string;
   private ingredients: Array<string>;
+  private time: number;
+  private serving: number;
 
   constructor(id: number) {
     this.id = id;
@@ -28,5 +30,16 @@ export default class Recipe {
       console.log(error);
       alert('Something goes wrong: ' + error);
     }
+  }
+
+  calcTime() {
+    // Assuming that we need 15 min for each 3 ingredients
+    const numIng = this.ingredients.length;
+    const periods = Math.ceil(numIng / 3);
+    this.time = periods * 15;
+  }
+
+  calcServing() {
+    this.serving = 4;
   }
 }
