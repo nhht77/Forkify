@@ -8,6 +8,8 @@ interface State {
   recipe?: Recipe;
 }
 
+declare global { interface Window { r: Recipe} }
+
 /** Global state of the app
  * - Search object
  * - Current recipe object
@@ -23,7 +25,11 @@ const state: State = {
  */
 const controlSearch: Function = async () => {
   // 1) Get the query from the view
-  const query: string = searchView.getInput();
+  // const query: string = searchView.getInput();
+
+  // TESTING
+  const query: string = "pizza";
+
 
   if (query) {
     // 2)Now search object and add to state
@@ -53,6 +59,12 @@ elements.searchForm.addEventListener('submit', e => {
   controlSearch();
 });
 
+// TESTING
+window.addEventListener('load', e => {
+  e.preventDefault();
+  controlSearch();
+});
+
 elements.searchResultsPages.addEventListener('click', async e => {
   const target = e.target as HTMLElement;
   const button = target.closest('.btn-inline');
@@ -77,6 +89,9 @@ const controlRecipe: Function = async () => {
 
     // Create new recipe object
     state.recipe = new Recipe(id);
+
+    // TESTING
+    window.r = state.recipe;
 
     try {
       // Get recipe data

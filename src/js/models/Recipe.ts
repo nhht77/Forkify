@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+interface Ingredient{
+  count: number
+  ingredient: string
+  unit: string 
+}
+
 export default class Recipe {
   private id: number;
   private title: string;
@@ -63,17 +69,41 @@ export default class Recipe {
       'pound'
     ];
 
-    const newIngredients: Array<string> = this.ingredients.map(el => {
+    const newIngredients: Array<Ingredient> = this.ingredients.map(el => {
       // 1) Uniforms unit
       let ingredient = el.toLowerCase();
       unitsLong.forEach((unit, idx) => {
         ingredient = ingredient.replace(unit, unitsShort[idx]);
       });
       // 2) Remove parentheses
-      ingredient.replace(/\s*\(.*?\)\s*/g, '');
+      ingredient.replace(/\s*\(.*?\)\s*/g, ' ');
 
       // 3)Parse ingredients into count, unit and ingredient
-      return ingredient;
+      const arrIng = ingredient.split(' ');
+      const unitIndex = arrIng.findIndex( el2 => unitsShort.includes(el2) );
+
+      let objIng: Ingredient;
+      if (unitIndex > -1 ){
+        // There is a unit
+      } 
+      else if(parseInt(arrIng[0], 10)) {
+        // There is NO unit, but 1st element is a number
+        objIng = {
+          count: parseInt(arrIng[0], 10),
+          unit: '',
+          ingredient: arrIng.slice(1).join(' ')
+        }
+      }
+      else if(unitIndex === -1) {
+        // There is NO unit and NO number in 1st position 
+        objIng = {
+          count: 1,
+          unit: '',
+          ingredient
+        }
+      }
+
+      return objIng;
     });
     return newIngredients;
   }
