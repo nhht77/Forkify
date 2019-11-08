@@ -8,6 +8,9 @@ interface State {
   recipe?: Recipe;
 }
 
+// TEST CODE
+// declare global { interface Window { r: Recipe} }
+
 /** Global state of the app
  * - Search object
  * - Current recipe object
@@ -25,6 +28,9 @@ const controlSearch: Function = async () => {
   // 1) Get the query from the view
   const query: string = searchView.getInput();
 
+  // TESTING
+  // const query: string = "pizza";
+
   if (query) {
     // 2)Now search object and add to state
     state.search = new Search(query);
@@ -37,13 +43,13 @@ const controlSearch: Function = async () => {
     try {
       // 4) Search for recipes
       const result: Array<Search> = await state.search.getResults();
-  
+
       // 5) Render results on UI
       clearLoader();
       searchView.renderResults(result);
     } catch (error) {
-      alert('Something wrong with the search ' + error)
-      clearLoader()
+      alert('Something wrong with the search ' + error);
+      clearLoader();
     }
   }
 };
@@ -52,6 +58,12 @@ elements.searchForm.addEventListener('submit', e => {
   e.preventDefault();
   controlSearch();
 });
+
+// TESTING
+// window.addEventListener('load', e => {
+//   e.preventDefault();
+//   controlSearch();
+// });
 
 elements.searchResultsPages.addEventListener('click', async e => {
   const target = e.target as HTMLElement;
@@ -78,9 +90,13 @@ const controlRecipe: Function = async () => {
     // Create new recipe object
     state.recipe = new Recipe(id);
 
+    // TESTING
+    // window.r = state.recipe;
+
     try {
       // Get recipe data
       await state.recipe.getRecipe();
+      state.recipe.parseIngredients();
 
       // Calculate servings and time
       state.recipe.calcTime();
