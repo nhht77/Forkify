@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-interface Ingredient{
-  count: number
-  ingredient: string
-  unit: string 
+interface Ingredient {
+  count: number;
+  ingredient: string;
+  unit: string;
 }
 
 export default class Recipe {
@@ -80,27 +80,42 @@ export default class Recipe {
 
       // 3)Parse ingredients into count, unit and ingredient
       const arrIng = ingredient.split(' ');
-      const unitIndex = arrIng.findIndex( el2 => unitsShort.includes(el2) );
+      const unitIndex = arrIng.findIndex(el2 => unitsShort.includes(el2));
 
       let objIng: Ingredient;
-      if (unitIndex > -1 ){
+      if (unitIndex > -1) {
         // There is a unit
-      } 
-      else if(parseInt(arrIng[0], 10)) {
+        // Ex. 4 1/2 cups, arrCount is [4, 1/2]
+        // Ex. 4  cups, arrCount is [4]
+
+        const arrCount: Array<string> = arrIng.slice(0, unitIndex);
+
+        let count: number;
+        if (arrCount.length === 1) {
+          count = eval(arrCount[0].replace('-', '+'));
+        } else {
+          count = eval(arrIng.slice(0, unitIndex).join('+'));
+        }
+
+        objIng = {
+          count,
+          unit: arrIng[unitIndex],
+          ingredient: arrIng.slice(unitIndex + 1).join(' ')
+        };
+      } else if (parseInt(arrIng[0], 10)) {
         // There is NO unit, but 1st element is a number
         objIng = {
           count: parseInt(arrIng[0], 10),
           unit: '',
           ingredient: arrIng.slice(1).join(' ')
-        }
-      }
-      else if(unitIndex === -1) {
-        // There is NO unit and NO number in 1st position 
+        };
+      } else if (unitIndex === -1) {
+        // There is NO unit and NO number in 1st position
         objIng = {
           count: 1,
           unit: '',
           ingredient
-        }
+        };
       }
 
       return objIng;
