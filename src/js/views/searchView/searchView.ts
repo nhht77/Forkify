@@ -1,4 +1,4 @@
-import { elements } from './base';
+import { elements } from '../base';
 
 interface Recipe {
   image_url: string;

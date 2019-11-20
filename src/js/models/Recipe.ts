@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-interface Ingredient {
+export interface Ingredient {
   count: number;
   ingredient: string;
   unit: string;
@@ -35,6 +35,15 @@ export default class Recipe {
       alert('Something goes wrong: ' + error);
     }
   }
+
+  getId() {return this.id};
+  getTitle() {return this.title};
+  getAuthor() {return this.author};
+  getUrl() {return this.url};
+  getIngredient() {return this.parseIngredients()}
+  getImg() {return this.img};
+  getTime() {return this.time};
+  getServing() { return this.serving}
 
   calcTime() {
     // Assuming that we need 15 min for each 3 ingredients
