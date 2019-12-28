@@ -16,6 +16,15 @@ export const clearInput: Function = () => {
   elements.searchInput.value = '';
 };
 
+export const highlightSelected = (id:number) => {
+  const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+  resultsArr.forEach(el => {
+      el.classList.remove('results__link--active');
+  });
+  document.querySelector(`.results__link[href*="${id}"]`).classList.add('results__link--active');
+};
+
+
 const renderRecipe: Function = (recipe: Recipe) => {
   const markup: string = `
     <li>

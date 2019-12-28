@@ -1,8 +1,27 @@
 import { elements } from '../base';
-import Recipe, {Ingredient} from '../../models/Recipe';
+import Recipe, { Ingredient } from '../../models/Recipe';
+import { Fraction } from '../../utils/Fraction/';
 
 export const clearRecipe = () => {
-    elements.recipe.innerHTML = '';
+  elements.recipe.innerHTML = '';
+};
+
+const formatCount = (count: number) => {
+  if (count) {
+    const newCount = Math.round(count * 10000) / 10000;
+    const [int, dec] = newCount
+      .toString()
+      .split('.')
+      .map(el => parseInt(el, 10));
+
+    if (!dec) return newCount;
+    if (int === 0) {
+      return `${Fraction(newCount).display}`;
+    } else {
+        return `${int} ${Fraction(newCount - int).display}`;
+    }
+  }
+  return '?';
 };
 
 const createIngredient = (ingredient: Ingredient) => `
@@ -10,7 +29,7 @@ const createIngredient = (ingredient: Ingredient) => `
         <svg class="recipe__icon">
             <use href="img/icons.svg#icon-check"></use>
         </svg>
-        <div class="recipe__count">${ingredient.count}</div>
+        <div class="recipe__count">${formatCount(ingredient.count)}</div>
         <div class="recipe__ingredient">
             <span class="recipe__unit">${ingredient.unit}</span>
             ${ingredient.ingredient}
@@ -19,7 +38,7 @@ const createIngredient = (ingredient: Ingredient) => `
 `;
 
 export const renderRecipe = (recipe: Recipe) => {
-    const markup = `
+  const markup = `
         <figure class="recipe__fig">
             <img src="${recipe.getImg()}" alt="${recipe.getTitle()}" class="recipe__img">
             <h1 class="recipe__title">
@@ -61,7 +80,10 @@ export const renderRecipe = (recipe: Recipe) => {
         </div>
         <div class="recipe__ingredients">
             <ul class="recipe__ingredient-list">
-                ${recipe.getIngredient().map(el => createIngredient(el)).join('')}
+                ${recipe
+                  .getIngredient()
+                  .map(el => createIngredient(el))
+                  .join('')}
             </ul>
             <button class="btn-small recipe__btn recipe__btn--add">
                 <svg class="search__icon">
@@ -84,5 +106,5 @@ export const renderRecipe = (recipe: Recipe) => {
             </a>
         </div>
     `;
-    elements.recipe.insertAdjacentHTML('afterbegin', markup);
+  elements.recipe.insertAdjacentHTML('afterbegin', markup);
 };
