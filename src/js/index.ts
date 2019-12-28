@@ -82,11 +82,14 @@ elements.searchResultsPages.addEventListener('click', async e => {
  * RECIPE CONTROLLER
  */
 const controlRecipe: Function = async () => {
-  const id = parseInt(window.location.hash.replace('#', ''));
+  const id: number = parseInt(window.location.hash.replace('#', ''));
 
   if (id) {
     // Prepare UI for changes
     recipeView.clearRecipe();
+
+    // Highlight search item
+    if (state.search) searchView.highlightSelected(id);
 
     // Create new recipe object
     state.recipe = new Recipe(id);
