@@ -118,3 +118,21 @@ const controlRecipe: Function = async () => {
 ['hashchange', 'load'].forEach(event =>
   window.addEventListener(event, () => controlRecipe())
 );
+
+elements.recipe.addEventListener('click', e => {
+  //Typescript checking for clicking target as instance of Element
+  if (event.target instanceof Element) {
+    // Descrease serving is clicked
+    if (event.target.matches('.btn-decrease, .btn-decrease *')) {
+      if (state.recipe.getServings() > 1) {
+        state.recipe.updateServings('desc');
+        recipeView.updateServingsIngredients(state.recipe);
+      }
+    }
+    // Increase serving is clicked
+    else if (event.target.matches('.btn-increase, .btn-increase *')) {
+      state.recipe.updateServings('inc');
+      recipeView.updateServingsIngredients(state.recipe);
+    }
+  }
+});

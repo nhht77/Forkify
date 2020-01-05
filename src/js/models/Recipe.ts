@@ -13,8 +13,9 @@ export default class Recipe {
   private url: string;
   private img: string;
   private ingredients: Array<string>;
+  private ingredientObjs: Array<Ingredient>;
   private time: number;
-  private serving: number;
+  private servings: number;
 
   constructor(id: number) {
     this.id = id;
@@ -36,14 +37,33 @@ export default class Recipe {
     }
   }
 
-  getId() {return this.id};
-  getTitle() {return this.title};
-  getAuthor() {return this.author};
-  getUrl() {return this.url};
-  getIngredient() {return this.parseIngredients()}
-  getImg() {return this.img};
-  getTime() {return this.time};
-  getServing() { return this.serving}
+  getId() {
+    return this.id;
+  }
+  getTitle() {
+    return this.title;
+  }
+  getAuthor() {
+    return this.author;
+  }
+  getUrl() {
+    return this.url;
+  }
+  getIngredient() {
+    return this.ingredients;
+  }
+  getIngredientObjs() {
+    return this.ingredientObjs;
+  }
+  getImg() {
+    return this.img;
+  }
+  getTime() {
+    return this.time;
+  }
+  getServings() {
+    return this.servings;
+  }
 
   calcTime() {
     // Assuming that we need 15 min for each 3 ingredients
@@ -53,7 +73,7 @@ export default class Recipe {
   }
 
   calcServing() {
-    this.serving = 4;
+    this.servings = 4;
   }
 
   parseIngredients() {
@@ -129,6 +149,21 @@ export default class Recipe {
 
       return objIng;
     });
+    this.ingredientObjs = newIngredients;
     return newIngredients;
   }
+
+  updateServings = (type: string) => {
+    const newServings = type === 'desc' ? this.servings - 1 : this.servings + 1;
+    console.log(newServings);
+    console.log(this.servings)
+    console.log(`newServings / this.servings: ${newServings / this.servings}`)
+    this.parseIngredients().forEach(
+      (ing: Ingredient) => {
+        // console.log(ing);
+        (ing.count = (ing.count * (newServings / this.servings)))
+      }
+    );
+    this.servings = newServings;
+  };
 }
