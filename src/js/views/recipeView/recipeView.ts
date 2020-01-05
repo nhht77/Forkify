@@ -18,7 +18,7 @@ const formatCount = (count: number) => {
     if (int === 0) {
       return `${Fraction(newCount).display}`;
     } else {
-        return `${int} ${Fraction(newCount - int).display}`;
+      return `${int} ${Fraction(newCount - int).display}`;
     }
   }
   return '?';
@@ -57,7 +57,7 @@ export const renderRecipe = (recipe: Recipe) => {
                 <svg class="recipe__info-icon">
                     <use href="img/icons.svg#icon-man"></use>
                 </svg>
-                <span class="recipe__info-data recipe__info-data--people">${recipe.getServing()}</span>
+                <span class="recipe__info-data recipe__info-data--people">${recipe.getServings()}</span>
                 <span class="recipe__info-text"> servings</span>
                 <div class="recipe__info-buttons">
                     <button class="btn-tiny btn-decrease">
@@ -81,8 +81,8 @@ export const renderRecipe = (recipe: Recipe) => {
         <div class="recipe__ingredients">
             <ul class="recipe__ingredient-list">
                 ${recipe
-                  .getIngredient()
-                  .map(el => createIngredient(el))
+                  .getIngredientObjs()
+                  .map((el: Ingredient) => createIngredient(el))
                   .join('')}
             </ul>
             <button class="btn-small recipe__btn recipe__btn--add">
@@ -107,4 +107,16 @@ export const renderRecipe = (recipe: Recipe) => {
         </div>
     `;
   elements.recipe.insertAdjacentHTML('afterbegin', markup);
+};
+
+export const updateServingsIngredients: Function = (recipe: Recipe) => {
+  document.querySelector(
+    '.recipe__info-data--people'
+  ).textContent = recipe.getServings().toString();
+
+  const countElements = Array.from(document.querySelectorAll('.recipe__count'));
+  countElements.forEach((el, idx) => {
+    let ingredients = recipe.getIngredientObjs();
+    el.textContent = formatCount(ingredients[idx].count).toString();
+  });
 };
