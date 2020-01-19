@@ -1,8 +1,10 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
+import List from './models/List';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import { elements, renderLoader, clearLoader } from './views/base';
+
 
 interface State {
   search?: Search;
@@ -11,6 +13,7 @@ interface State {
 
 // TEST CODE
 // declare global { interface Window { r: Recipe} }
+// declare global { interface Window { l: List} }
 
 /** Global state of the app
  * - Search object
