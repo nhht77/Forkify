@@ -5,6 +5,7 @@ interface Elements {
   searchResultList: HTMLUListElement;
   searchResultsPages: HTMLDivElement;
   recipe: HTMLDivElement;
+  shopping: HTMLDivElement;
 }
 
 interface ElementStrings {
@@ -17,7 +18,8 @@ export const elements: Elements = {
   searchResult: <HTMLElement>document.querySelector('.results'),
   searchResultList: <HTMLUListElement>document.querySelector('.results__list'),
   searchResultsPages: <HTMLDivElement>document.querySelector('.results__pages'),
-  recipe: <HTMLDivElement>document.querySelector('.recipe')
+  recipe: <HTMLDivElement>document.querySelector('.recipe'),
+  shopping: <HTMLDivElement>document.querySelector('.shopping__list')
 };
 
 export const elementStrings: ElementStrings = {

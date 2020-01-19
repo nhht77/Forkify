@@ -1,4 +1,4 @@
-interface Item {
+export interface Item {
   id: string;
   count: number;
   ingredient: string;
